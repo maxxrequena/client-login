@@ -1,3 +1,5 @@
+import { usePinValidation } from "../hooks/usePinValidation";
+
 export const STRINGS = {
   login: {
     title: "Login",
@@ -26,6 +28,11 @@ export const STRINGS = {
     success: "Éxito",
     cancel: "Cancelar",
     confirm: "Confirmar",
+  },
+
+  usePinValidation: {
+    onlyNumbers:
+      "Solo se permiten números. No se aceptan letras ni caracteres especiales.",
   },
 };
 

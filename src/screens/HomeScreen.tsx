@@ -4,6 +4,7 @@ import { useSetRecoilState } from "recoil";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { authState } from "../recoil/atoms";
 import { useTheme } from "../context/ThemeContext";
+import Counter from "../components/Counter/Counter";
 
 const AUTH_STORAGE_KEY = "@auth_session";
 
@@ -26,7 +27,7 @@ const HomeScreen: React.FC = () => {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Text style={[styles.title, { color: colors.text }]}>Home</Text>
-
+      <Counter />
       <View style={styles.bottomContainer}>
         <TouchableOpacity
           style={[styles.logoutButton, { backgroundColor: colors.error }]}

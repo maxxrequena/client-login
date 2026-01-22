@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { isNumericOnly } from "../utils/validators";
+import { STRINGS } from "../constants/strings";
 
 interface UsePinValidationReturn {
   pin: string;
@@ -28,9 +29,7 @@ export const usePinValidation = (): UsePinValidationReturn => {
       setPin(value);
       setError(""); // Clear error when typing correctly
     } else {
-      setError(
-        "Solo se permiten números. No se aceptan letras ni caracteres especiales.",
-      );
+      setError(STRINGS.usePinValidation.onlyNumbers);
     }
   };
 
