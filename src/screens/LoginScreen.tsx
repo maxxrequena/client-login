@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -10,20 +10,25 @@ import { useSetRecoilState } from "recoil";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { authState } from "../recoil/atoms";
 import { useTheme } from "../context/ThemeContext";
-
-const AUTH_STORAGE_KEY = "@auth_session";
-const CORRECT_PIN = "1234";
+import { usePinValidation } from "../hooks/usePinValidation";
+import { isNumericOnly } from "../utils/validators";
+import { STRINGS, AUTH_STORAGE_KEY, CORRECT_PIN } from "../constants/strings";
 
 const LoginScreen: React.FC = () => {
   const setAuth = useSetRecoilState(authState);
   const { colors } = useTheme();
-  const [pin, setPin] = useState("");
-  const [error, setError] = useState("");
+  const { pin, error, handlePinChange, setError } = usePinValidation();
 
   const handleLogin = async () => {
+    // Verify that it only contains numbers
+    if (!isNumericOnly(pin)) {
+      setError(STRINGS.login.errors.onlyNumbers);
+      return;
+    }
+
     // Verify PIN length
     if (pin.length < 4) {
-      setError("El PIN debe tener 4 dígitos.");
+      setError(STRINGS.login.errors.pinLength);
       return;
     }
 
@@ -36,27 +41,29 @@ const LoginScreen: React.FC = () => {
         setAuth(true);
         // Save session in AsyncStorage
         await AsyncStorage.setItem(AUTH_STORAGE_KEY, "true");
-        console.log("Login successful");
+        console.log(STRINGS.login.success.loginSuccessful);
       } catch (error) {
         console.error("Error during login:", error);
       }
     } else {
-      setError("PIN incorrecto. Intente de nuevo.");
+      setError(STRINGS.login.errors.incorrectPin);
     }
   };
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text style={[styles.title, { color: colors.text }]}>Login</Text>
+      <Text style={[styles.title, { color: colors.text }]}>
+        {STRINGS.login.title}
+      </Text>
       <TextInput
         style={[styles.input, { color: colors.text, borderColor: colors.text }]}
-        placeholder="Ingrese su PIN"
+        placeholder={STRINGS.login.pinPlaceholder}
         placeholderTextColor="#888"
         keyboardType="numeric"
         maxLength={4}
         secureTextEntry
         value={pin}
-        onChangeText={setPin}
+        onChangeText={handlePinChange}
       />
       {error !== "" && (
         <Text style={[styles.errorText, { color: colors.error }]}>{error}</Text>
@@ -65,7 +72,7 @@ const LoginScreen: React.FC = () => {
         style={[styles.button, { backgroundColor: colors.primary }]}
         onPress={handleLogin}
       >
-        <Text style={styles.buttonText}>Ingresar</Text>
+        <Text style={styles.buttonText}>{STRINGS.login.submitButton}</Text>
       </TouchableOpacity>
     </View>
   );

@@ -27,12 +27,14 @@ const HomeScreen: React.FC = () => {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Text style={[styles.title, { color: colors.text }]}>Home</Text>
 
-      <TouchableOpacity
-        style={[styles.logoutButton, { backgroundColor: colors.error }]}
-        onPress={handleLogout}
-      >
-        <Text style={styles.buttonText}>Cerrar Sesión</Text>
-      </TouchableOpacity>
+      <View style={styles.bottomContainer}>
+        <TouchableOpacity
+          style={[styles.logoutButton, { backgroundColor: colors.error }]}
+          onPress={handleLogout}
+        >
+          <Text style={styles.buttonText}>Cerrar Sesión</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -48,6 +50,13 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
     marginBottom: 40,
+  },
+  bottomContainer: {
+    position: "absolute",
+    bottom: 40,
+    left: 20,
+    right: 20,
+    alignItems: "center",
   },
   logoutButton: {
     paddingHorizontal: 30,
