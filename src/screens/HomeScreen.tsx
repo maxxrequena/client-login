@@ -9,7 +9,7 @@ const AUTH_STORAGE_KEY = "@auth_session";
 
 const HomeScreen: React.FC = () => {
   const setAuth = useSetRecoilState(authState);
-  const { setTheme, colors } = useTheme();
+  const { colors } = useTheme();
 
   const handleLogout = async () => {
     try {
@@ -26,22 +26,6 @@ const HomeScreen: React.FC = () => {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Text style={[styles.title, { color: colors.text }]}>Home</Text>
-
-      <View style={styles.themeButtons}>
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: colors.primary }]}
-          onPress={() => setTheme("light")}
-        >
-          <Text style={styles.buttonText}>Tema Claro</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: colors.secondary }]}
-          onPress={() => setTheme("dark")}
-        >
-          <Text style={styles.buttonText}>Tema Oscuro</Text>
-        </TouchableOpacity>
-      </View>
 
       <TouchableOpacity
         style={[styles.logoutButton, { backgroundColor: colors.error }]}
@@ -64,16 +48,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
     marginBottom: 40,
-  },
-  themeButtons: {
-    flexDirection: "row",
-    gap: 10,
-    marginBottom: 30,
-  },
-  button: {
-    paddingHorizontal: 30,
-    paddingVertical: 15,
-    borderRadius: 8,
   },
   logoutButton: {
     paddingHorizontal: 30,

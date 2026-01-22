@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { authState } from "../recoil/atoms";
 import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
+import ThemeToggleButtons from "../components/ThemeToggleButtons/ThemeToggleButtons";
 
 const AUTH_STORAGE_KEY = "@auth_session";
 
@@ -49,19 +50,25 @@ const AppNavigator: React.FC = () => {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        {isAuthenticated ? (
-          <Stack.Screen name="Home" component={HomeScreen} />
-        ) : (
-          <Stack.Screen name="Login" component={LoginScreen} />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={{ flex: 1 }}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          {isAuthenticated ? (
+            <Stack.Screen name="Home" component={HomeScreen} />
+          ) : (
+            <Stack.Screen name="Login" component={LoginScreen} />
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+
+      <View style={styles.themeButtonsContainer}>
+        <ThemeToggleButtons />
+      </View>
+    </View>
   );
 };
 
@@ -71,6 +78,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#FFFFFF",
+  },
+  themeButtonsContainer: {
+    position: "absolute",
+    top: 50,
+    right: 20,
+    zIndex: 1000,
   },
 });
 
